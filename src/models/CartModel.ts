@@ -11,8 +11,9 @@ CartModel.init(
       unique: true,
       primaryKey: true
     },
-    user_id: {
+    userId: {
       type: UUID,
+      field: 'user_id',
       allowNull: false
     }
   },

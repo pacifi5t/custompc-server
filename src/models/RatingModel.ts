@@ -11,12 +11,14 @@ RatingModel.init(
       unique: true,
       primaryKey: true
     },
-    author_id: {
+    authorId: {
       type: UUID,
+      field: 'author_id',
       allowNull: false
     },
-    build_id: {
+    buildId: {
       type: UUID,
+      field: 'build_id',
       allowNull: false
     },
     stars: {

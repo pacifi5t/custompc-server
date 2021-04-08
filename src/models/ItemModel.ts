@@ -11,13 +11,22 @@ ItemModel.init(
       unique: true,
       primaryKey: true
     },
-    cart_id: {
+    cartId: {
       type: UUID,
-      allowNull: false
+      field: 'cart_id',
+      onDelete: 'SET NULL'
     },
-    unit_id: {
+    orderId: {
       type: UUID,
-      allowNull: false
+      field: 'order_id'
+    },
+    customBuildId: {
+      type: UUID,
+      field: 'custom_build_id'
+    },
+    companyBuildId: {
+      type: UUID,
+      field: 'company_build_id'
     },
     quantity: {
       type: INTEGER,
@@ -30,7 +39,17 @@ ItemModel.init(
     modelName: 'Item',
     tableName: 'items',
     createdAt: 'created_at',
-    updatedAt: 'updated_at'
+    updatedAt: 'updated_at',
+    validate: {
+      hasOnlyOneBuildId() {
+        if (this.customBuildId === null && this.companyBuildId === null) {
+          throw new Error(`None of build_id's were assigned!`);
+        }
+        if (this.customBuildId !== null && this.companyBuildId !== null) {
+          throw new Error(`Both of build_id's were assigned!`);
+        }
+      }
+    }
   }
 );
 

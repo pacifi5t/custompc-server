@@ -16,8 +16,9 @@ TaskModel.init(
       allowNull: false,
       unique: true
     },
-    build_id: {
+    buildId: {
       type: UUID,
+      field: 'build_id',
       allowNull: false
     }
   },

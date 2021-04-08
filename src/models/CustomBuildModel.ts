@@ -11,16 +11,18 @@ CustomBuildModel.init(
       unique: true,
       primaryKey: true
     },
-    author_id: {
+    authorId: {
       type: UUID,
+      field: 'author_id',
       allowNull: false
     },
     price: {
       type: INTEGER,
       allowNull: false
     },
-    average_rating: {
-      type: FLOAT
+    averageRating: {
+      type: FLOAT,
+      field: 'average_rating'
     },
     tasks: {
       type: TEXT

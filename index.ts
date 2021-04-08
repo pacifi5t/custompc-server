@@ -1,6 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 import db from 'db';
+import {UserModel} from 'models';
+
+const a = UserModel;
 
 const PORT = process.env.PORT || 9999;
 

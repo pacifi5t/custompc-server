@@ -11,16 +11,19 @@ OrderModel.init(
       unique: true,
       primaryKey: true
     },
-    user_id: {
+    userId: {
       type: UUID,
+      field: 'user_id',
       allowNull: false
     },
-    worker_id: {
+    workerId: {
       type: UUID,
+      field: 'worker_id',
       allowNull: false
     },
-    manager_id: {
+    managerId: {
       type: UUID,
+      field: 'manager_id',
       allowNull: false
     },
     status: {

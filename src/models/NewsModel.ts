@@ -11,8 +11,9 @@ NewsModel.init(
       unique: true,
       primaryKey: true
     },
-    manager_id: {
+    managerId: {
       type: UUID,
+      field: 'manager_id',
       allowNull: false
     },
     title: {

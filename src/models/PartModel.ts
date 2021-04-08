@@ -28,8 +28,9 @@ PartModel.init(
       type: TEXT,
       allowNull: false
     },
-    specs_file: {
+    specsFile: {
       type: TEXT,
+      field: 'specs_file',
       allowNull: false,
       unique: true
     }
