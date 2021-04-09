@@ -21,8 +21,7 @@ CartModel.init(
     sequelize: db,
     modelName: 'Cart',
     tableName: 'carts',
-    createdAt: 'created_at',
-    updatedAt: 'updated_at'
+    timestamps: false
   }
 );
 

@@ -18,7 +18,7 @@ TaskModel.init(
     },
     buildId: {
       type: UUID,
-      field: 'build_id',
+      field: 'company_build_id',
       allowNull: false
     }
   },
@@ -26,8 +26,7 @@ TaskModel.init(
     sequelize: db,
     modelName: 'Task',
     tableName: 'tasks',
-    createdAt: 'created_at',
-    updatedAt: 'updated_at'
+    timestamps: false
   }
 );
 

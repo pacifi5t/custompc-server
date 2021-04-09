@@ -1,9 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 import db from 'db';
-import {UserModel} from 'models';
-
-const a = UserModel;
 
 const PORT = process.env.PORT || 9999;
 
@@ -14,7 +11,7 @@ app.use(express.json());
 async function start() {
   try {
     await db.authenticate();
-    await db.sync();
+    //await db.sync();
     app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
   } catch (er) {
     console.error(er);

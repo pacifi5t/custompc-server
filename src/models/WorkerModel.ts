@@ -36,8 +36,7 @@ WorkerModel.init(
     sequelize: db,
     modelName: 'Worker',
     tableName: 'workers',
-    createdAt: 'created_at',
-    updatedAt: 'updated_at'
+    timestamps: false
   }
 );
 

@@ -38,8 +38,7 @@ ItemModel.init(
     sequelize: db,
     modelName: 'Item',
     tableName: 'items',
-    createdAt: 'created_at',
-    updatedAt: 'updated_at',
+    timestamps: false,
     validate: {
       hasOnlyOneBuildId() {
         if (this.customBuildId === null && this.companyBuildId === null) {

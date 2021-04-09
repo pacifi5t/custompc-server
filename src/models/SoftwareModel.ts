@@ -37,8 +37,7 @@ SoftwareModel.init(
     sequelize: db,
     modelName: 'Software',
     tableName: 'software',
-    createdAt: 'created_at',
-    updatedAt: 'updated_at'
+    timestamps: false
   }
 );
 

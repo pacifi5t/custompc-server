@@ -11,8 +11,6 @@ import { TaskModel } from './TaskModel';
 import { UserModel } from './UserModel';
 import { WorkerModel } from './WorkerModel';
 
-//TODO: Describe relations between models
-
 CartModel.hasMany(ItemModel, { foreignKey: 'cart_id' });
 
 CompanyBuildModel.hasMany(ItemModel, { foreignKey: 'company_build_id' });

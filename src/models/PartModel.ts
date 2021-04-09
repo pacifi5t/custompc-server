@@ -39,8 +39,7 @@ PartModel.init(
     sequelize: db,
     modelName: 'Part',
     tableName: 'parts',
-    createdAt: 'created_at',
-    updatedAt: 'updated_at'
+    timestamps: false
   }
 );
 
