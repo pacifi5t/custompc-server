@@ -13,7 +13,6 @@ NewsModel.init(
     },
     managerId: {
       type: UUID,
-      field: 'manager_id',
       allowNull: false
     },
     title: {
@@ -33,8 +32,7 @@ NewsModel.init(
     sequelize: db,
     modelName: 'News',
     tableName: 'news',
-    createdAt: 'created_at',
-    updatedAt: 'updated_at'
+    underscored: true
   }
 );
 

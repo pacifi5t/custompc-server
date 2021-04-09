@@ -13,7 +13,6 @@ CartModel.init(
     },
     userId: {
       type: UUID,
-      field: 'user_id',
       allowNull: false
     }
   },
@@ -21,7 +20,8 @@ CartModel.init(
     sequelize: db,
     modelName: 'Cart',
     tableName: 'carts',
-    timestamps: false
+    timestamps: false,
+    underscored: true
   }
 );
 

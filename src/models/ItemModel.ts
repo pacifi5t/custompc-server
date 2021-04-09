@@ -13,20 +13,16 @@ ItemModel.init(
     },
     cartId: {
       type: UUID,
-      field: 'cart_id',
       onDelete: 'SET NULL'
     },
     orderId: {
-      type: UUID,
-      field: 'order_id'
+      type: UUID
     },
     customBuildId: {
-      type: UUID,
-      field: 'custom_build_id'
+      type: UUID
     },
     companyBuildId: {
-      type: UUID,
-      field: 'company_build_id'
+      type: UUID
     },
     quantity: {
       type: INTEGER,
@@ -39,6 +35,7 @@ ItemModel.init(
     modelName: 'Item',
     tableName: 'items',
     timestamps: false,
+    underscored: true,
     validate: {
       hasOnlyOneBuildId() {
         if (this.customBuildId === null && this.companyBuildId === null) {

@@ -13,17 +13,14 @@ OrderModel.init(
     },
     userId: {
       type: UUID,
-      field: 'user_id',
       allowNull: false
     },
     workerId: {
       type: UUID,
-      field: 'worker_id',
       allowNull: false
     },
     managerId: {
       type: UUID,
-      field: 'manager_id',
       allowNull: false
     },
     status: {
@@ -36,8 +33,7 @@ OrderModel.init(
     sequelize: db,
     modelName: 'Order',
     tableName: 'orders',
-    createdAt: 'created_at',
-    updatedAt: 'updated_at'
+    underscored: true
   }
 );
 

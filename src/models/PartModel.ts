@@ -30,7 +30,6 @@ PartModel.init(
     },
     specsFile: {
       type: TEXT,
-      field: 'specs_file',
       allowNull: false,
       unique: true
     }
@@ -39,7 +38,8 @@ PartModel.init(
     sequelize: db,
     modelName: 'Part',
     tableName: 'parts',
-    timestamps: false
+    timestamps: false,
+    underscored: true
   }
 );
 

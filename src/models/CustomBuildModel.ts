@@ -13,7 +13,6 @@ CustomBuildModel.init(
     },
     authorId: {
       type: UUID,
-      field: 'author_id',
       allowNull: false
     },
     price: {
@@ -21,8 +20,7 @@ CustomBuildModel.init(
       allowNull: false
     },
     averageRating: {
-      type: FLOAT,
-      field: 'average_rating'
+      type: FLOAT
     },
     tasks: {
       type: TEXT
@@ -46,8 +44,7 @@ CustomBuildModel.init(
     sequelize: db,
     modelName: 'CustomBuild',
     tableName: 'custom_builds',
-    createdAt: 'created_at',
-    updatedAt: 'updated_at'
+    underscored: true
   }
 );
 

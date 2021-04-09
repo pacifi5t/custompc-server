@@ -13,12 +13,10 @@ RatingModel.init(
     },
     authorId: {
       type: UUID,
-      field: 'author_id',
       allowNull: false
     },
     buildId: {
       type: UUID,
-      field: 'build_id',
       allowNull: false
     },
     stars: {
@@ -33,8 +31,7 @@ RatingModel.init(
     sequelize: db,
     modelName: 'Rating',
     tableName: 'ratings',
-    createdAt: 'created_at',
-    updatedAt: 'updated_at'
+    underscored: true
   }
 );
 

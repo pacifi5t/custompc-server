@@ -13,7 +13,6 @@ WorkerModel.init(
     },
     userId: {
       type: UUID,
-      field: 'user_id',
       allowNull: false,
       unique: true
     },
@@ -36,7 +35,8 @@ WorkerModel.init(
     sequelize: db,
     modelName: 'Worker',
     tableName: 'workers',
-    timestamps: false
+    timestamps: false,
+    underscored: true
   }
 );
 

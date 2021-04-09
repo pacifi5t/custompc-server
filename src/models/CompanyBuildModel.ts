@@ -37,8 +37,7 @@ CompanyBuildModel.init(
     sequelize: db,
     modelName: 'CompanyBuild',
     tableName: 'company_builds',
-    createdAt: 'created_at',
-    updatedAt: 'updated_at'
+    underscored: true
   }
 );
 

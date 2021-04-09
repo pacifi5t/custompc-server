@@ -37,7 +37,8 @@ SoftwareModel.init(
     sequelize: db,
     modelName: 'Software',
     tableName: 'software',
-    timestamps: false
+    timestamps: false,
+    underscored: true
   }
 );
 
