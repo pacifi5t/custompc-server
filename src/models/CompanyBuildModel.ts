@@ -1,5 +1,5 @@
 import db from 'db';
-import { Model, TEXT, UUID, INTEGER } from 'sequelize';
+import { Model, STRING, UUID, INTEGER } from 'sequelize';
 
 class CompanyBuildModel extends Model {}
 
@@ -16,7 +16,7 @@ CompanyBuildModel.init(
       allowNull: false
     },
     tasks: {
-      type: TEXT
+      type: STRING
     },
     warranty: {
       type: INTEGER,
@@ -24,11 +24,11 @@ CompanyBuildModel.init(
       defaultValue: 1
     },
     image: {
-      type: TEXT,
+      type: STRING,
       allowNull: false
     },
     status: {
-      type: TEXT,
+      type: STRING,
       allowNull: false,
       defaultValue: 'relevant'
     }

@@ -4,8 +4,8 @@
   "description": "Server & API for CustomPC project",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "nodemon -r dotenv/config index.ts dotenv_config_path=/home/pacifi5t/.config/custompc/config.env",
-    "start": "node -r dotenv/config dist/index.js dotenv_config_path=/home/pacifi5t/.config/custompc/config.env",
+    "dev": "nodemon -r dotenv/config index.ts dotenv_config_path=/home/pacifi5t/.config/custompc/mssql_config.env",
+    "start": "node -r dotenv/config dist/index.js dotenv_config_path=/home/pacifi5t/.config/custompc/mssql_config.env",
     "build": "rm -rf dist && tsc -p ."
   },
   "keywords": [],
@@ -18,6 +18,7 @@
     "pg": "^8.5.1",
     "pg-hstore": "^2.3.3",
     "sequelize": "^6.6.2",
+    "tedious": "^11.0.7",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

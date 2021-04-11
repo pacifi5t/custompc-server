@@ -1,5 +1,5 @@
 import db from 'db';
-import { Model, TEXT, UUID, INTEGER } from 'sequelize';
+import { Model, STRING, UUID, INTEGER } from 'sequelize';
 
 class WorkerModel extends Model {}
 
@@ -17,7 +17,7 @@ WorkerModel.init(
       unique: true
     },
     name: {
-      type: TEXT,
+      type: STRING,
       allowNull: false,
       unique: true
     },
@@ -26,7 +26,7 @@ WorkerModel.init(
       allowNull: false
     },
     status: {
-      type: TEXT,
+      type: STRING,
       allowNull: false,
       defaultValue: 'working'
     }

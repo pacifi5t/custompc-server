@@ -1,5 +1,5 @@
 import db from 'db';
-import { Model, TEXT, UUID } from 'sequelize';
+import { Model, STRING, UUID } from 'sequelize';
 
 class OrderModel extends Model {}
 
@@ -24,7 +24,7 @@ OrderModel.init(
       allowNull: false
     },
     status: {
-      type: TEXT,
+      type: STRING,
       allowNull: false,
       defaultValue: 'pending'
     }

@@ -1,5 +1,5 @@
 import db from 'db';
-import { Model, TEXT, UUID } from 'sequelize';
+import { Model, STRING, UUID } from 'sequelize';
 
 class NewsModel extends Model {}
 
@@ -16,15 +16,15 @@ NewsModel.init(
       allowNull: false
     },
     title: {
-      type: TEXT,
+      type: STRING,
       allowNull: false
     },
     content: {
-      type: TEXT,
+      type: STRING,
       allowNull: false
     },
     image: {
-      type: TEXT,
+      type: STRING,
       allowNull: false
     }
   },

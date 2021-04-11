@@ -1,5 +1,5 @@
 import db from 'db';
-import { Model, TEXT, UUID, INTEGER, FLOAT } from 'sequelize';
+import { Model, STRING, UUID, INTEGER, FLOAT } from 'sequelize';
 
 class CustomBuildModel extends Model {}
 
@@ -23,7 +23,7 @@ CustomBuildModel.init(
       type: FLOAT
     },
     tasks: {
-      type: TEXT
+      type: STRING
     },
     warranty: {
       type: INTEGER,
@@ -31,11 +31,11 @@ CustomBuildModel.init(
       defaultValue: 1
     },
     image: {
-      type: TEXT,
+      type: STRING,
       allowNull: false
     },
     status: {
-      type: TEXT,
+      type: STRING,
       allowNull: false,
       defaultValue: 'relevant'
     }

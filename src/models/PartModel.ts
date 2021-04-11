@@ -1,5 +1,5 @@
 import db from 'db';
-import { Model, TEXT, UUID, INTEGER } from 'sequelize';
+import { Model, STRING, UUID, INTEGER } from 'sequelize';
 
 class PartModel extends Model {}
 
@@ -12,11 +12,11 @@ PartModel.init(
       primaryKey: true
     },
     type: {
-      type: TEXT,
+      type: STRING,
       allowNull: false
     },
     name: {
-      type: TEXT,
+      type: STRING,
       allowNull: false,
       unique: true
     },
@@ -25,11 +25,11 @@ PartModel.init(
       allowNull: false
     },
     image: {
-      type: TEXT,
+      type: STRING,
       allowNull: false
     },
     specsFile: {
-      type: TEXT,
+      type: STRING,
       allowNull: false,
       unique: true
     }

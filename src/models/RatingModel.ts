@@ -1,5 +1,5 @@
 import db from 'db';
-import { Model, TEXT, UUID, INTEGER } from 'sequelize';
+import { Model, STRING, UUID, INTEGER } from 'sequelize';
 
 class RatingModel extends Model {}
 
@@ -24,7 +24,7 @@ RatingModel.init(
       allowNull: false
     },
     message: {
-      type: TEXT
+      type: STRING
     }
   },
   {

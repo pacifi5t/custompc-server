@@ -1,5 +1,5 @@
 import db from 'db';
-import { Model, TEXT, UUID } from 'sequelize';
+import { Model, STRING, UUID } from 'sequelize';
 
 class TaskModel extends Model {}
 
@@ -12,7 +12,7 @@ TaskModel.init(
       primaryKey: true
     },
     name: {
-      type: TEXT,
+      type: STRING,
       allowNull: false,
       unique: true
     },

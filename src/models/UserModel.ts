@@ -1,5 +1,5 @@
 import db from 'db';
-import { Model, TEXT, UUID } from 'sequelize';
+import { Model, STRING, UUID } from 'sequelize';
 
 class UserModel extends Model {}
 
@@ -12,21 +12,21 @@ UserModel.init(
       primaryKey: true
     },
     username: {
-      type: TEXT,
+      type: STRING,
       allowNull: false,
       unique: true
     },
     email: {
-      type: TEXT,
+      type: STRING,
       allowNull: false,
       unique: true
     },
     password: {
-      type: TEXT,
+      type: STRING,
       allowNull: false
     },
     role: {
-      type: TEXT,
+      type: STRING,
       allowNull: false,
       defaultValue: 'customer'
     }

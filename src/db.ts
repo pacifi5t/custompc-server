@@ -17,8 +17,11 @@ export default new Sequelize(
   process.env.DB_USER,
   process.env.DB_PASSWORD,
   {
-    dialect: 'postgres',
+    dialect: 'mssql',
     host: process.env.DB_HOST,
-    port: parseInt(process.env.DB_PORT)
+    port: parseInt(process.env.DB_PORT),
+    dialectOptions: {
+      instanceName: 'SQLEXPRESS'
+    }
   }
 );

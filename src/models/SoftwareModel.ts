@@ -1,5 +1,5 @@
 import db from 'db';
-import { Model, TEXT, UUID, INTEGER } from 'sequelize';
+import { Model, STRING, UUID, INTEGER } from 'sequelize';
 
 class SoftwareModel extends Model {}
 
@@ -12,11 +12,11 @@ SoftwareModel.init(
       primaryKey: true
     },
     type: {
-      type: TEXT,
+      type: STRING,
       allowNull: false
     },
     name: {
-      type: TEXT,
+      type: STRING,
       allowNull: false,
       unique: true
     },
@@ -25,11 +25,11 @@ SoftwareModel.init(
       allowNull: false
     },
     image: {
-      type: TEXT,
+      type: STRING,
       allowNull: false
     },
     description: {
-      type: TEXT,
+      type: STRING,
       allowNull: false
     }
   },
