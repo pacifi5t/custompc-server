@@ -2,14 +2,12 @@ import { CartModel } from './CartModel';
 import { CompanyBuildModel } from './CompanyBuildModel';
 import { CustomBuildModel } from './CustomBuildModel';
 import { ItemModel } from './ItemModel';
-import { NewsModel } from './NewsModel';
 import { OrderModel } from './OrderModel';
 import { PartModel } from './PartModel';
 import { RatingModel } from './RatingModel';
 import { SoftwareModel } from './SoftwareModel';
 import { TaskModel } from './TaskModel';
 import { UserModel } from './UserModel';
-import { WorkerModel } from './WorkerModel';
 
 CartModel.hasMany(ItemModel, { foreignKey: 'cart_id' });
 
@@ -47,24 +45,19 @@ OrderModel.hasMany(ItemModel, { foreignKey: 'order_id' });
 
 UserModel.hasOne(CartModel, { foreignKey: 'user_id' });
 UserModel.hasMany(CustomBuildModel, { foreignKey: 'author_id' });
-UserModel.hasMany(NewsModel, { foreignKey: 'manager_id' });
 UserModel.hasMany(OrderModel, { foreignKey: 'user_id' });
 UserModel.hasMany(RatingModel, { foreignKey: 'author_id' });
-UserModel.hasOne(WorkerModel, { foreignKey: 'user_id' });
 
-WorkerModel.hasMany(OrderModel, { foreignKey: 'worker_id' });
 
 export {
   CartModel,
   CompanyBuildModel,
   CustomBuildModel,
   ItemModel,
-  NewsModel,
   OrderModel,
   PartModel,
   RatingModel,
   SoftwareModel,
   TaskModel,
   UserModel,
-  WorkerModel
 };

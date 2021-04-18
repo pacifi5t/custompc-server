@@ -15,14 +15,6 @@ OrderModel.init(
       type: UUID,
       allowNull: false
     },
-    workerId: {
-      type: UUID,
-      allowNull: false
-    },
-    managerId: {
-      type: UUID,
-      allowNull: false
-    },
     status: {
       type: STRING,
       allowNull: false,

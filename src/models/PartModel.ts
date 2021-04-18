@@ -1,5 +1,5 @@
 import db from 'db';
-import { Model, STRING, UUID, INTEGER } from 'sequelize';
+import { Model, STRING, UUID, INTEGER, BOOLEAN } from 'sequelize';
 
 class PartModel extends Model {}
 
@@ -22,6 +22,10 @@ PartModel.init(
     },
     price: {
       type: INTEGER,
+      allowNull: false
+    },
+    inStock: {
+      type: BOOLEAN,
       allowNull: false
     },
     image: {
