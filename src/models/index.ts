@@ -47,17 +47,3 @@ UserModel.hasOne(CartModel, { foreignKey: 'user_id' });
 UserModel.hasMany(CustomBuildModel, { foreignKey: 'author_id' });
 UserModel.hasMany(OrderModel, { foreignKey: 'user_id' });
 UserModel.hasMany(RatingModel, { foreignKey: 'author_id' });
-
-
-export {
-  CartModel,
-  CompanyBuildModel,
-  CustomBuildModel,
-  ItemModel,
-  OrderModel,
-  PartModel,
-  RatingModel,
-  SoftwareModel,
-  TaskModel,
-  UserModel,
-};
