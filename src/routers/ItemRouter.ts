@@ -1,6 +1,7 @@
-import { Router, Request, Response } from 'express';
+import { Router, Request, Response, NextFunction } from 'express';
 import itemController from 'controllers/ItemController';
 import { BuildType } from 'utils';
+import { ApiError } from 'utils';
 
 const router = Router();
 
@@ -29,10 +30,10 @@ router.post('/', async (req: Request, res: Response) => {
   }
 });
 
-router.get('/', async (req: Request, res: Response) => {
+router.get('/', async (req: Request, res: Response, next: NextFunction) => {
   const { id } = req.query;
   if (typeof id !== 'string') {
-    return new Error('uc/ordl');
+    return next(ApiError.badRequest('ID incorrect or missing'));
   }
   return res.json(itemController.get(id));
 });
@@ -68,20 +69,26 @@ router.put('/', async (req: Request, res: Response) => {
   }
 });
 
-router.get('/custombuilds', async (req: Request, res: Response) => {
-  const { id } = req.query;
-  if (typeof id !== 'string') {
-    return new Error('uc/ordl');
+router.get(
+  '/custombuilds',
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.query;
+    if (typeof id !== 'string') {
+      return next(ApiError.badRequest('ID incorrect or missing'));
+    }
+    return res.json(itemController.getItemCustomBuildInfo(id));
   }
-  return res.json(itemController.getItemCustomBuildInfo(id));
-});
+);
 
-router.get('/companybuilds', async (req: Request, res: Response) => {
-  const { id } = req.query;
-  if (typeof id !== 'string') {
-    return new Error('uc/ordl');
+router.get(
+  '/companybuilds',
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.query;
+    if (typeof id !== 'string') {
+      return next(ApiError.badRequest('ID incorrect or missing'));
+    }
+    return res.json(itemController.getItemCompanyBuildInfo(id));
   }
-  return res.json(itemController.getItemCompanyBuildInfo(id));
-});
+);
 
 export default router;

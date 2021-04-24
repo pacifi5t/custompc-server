@@ -1,5 +1,6 @@
-import { Router, Request, Response } from 'express';
+import { Router, Request, Response, NextFunction } from 'express';
 import companyBuildController from 'controllers/CompanyBuildController';
+import { ApiError } from 'utils';
 
 const router = Router();
 
@@ -10,10 +11,10 @@ router.post('/', async (req: Request, res: Response) => {
   );
 });
 
-router.get('/', async (req: Request, res: Response) => {
+router.get('/', async (req: Request, res: Response, next: NextFunction) => {
   const { id } = req.query;
   if (typeof id !== 'string') {
-    return new Error('uc/ordl');
+    return next(ApiError.badRequest('ID incorrect or missing'));
   }
   return res.json(companyBuildController.get(id));
 });
@@ -23,55 +24,51 @@ router.put('/', async (req: Request, res: Response) => {
   if (typeof id !== 'string') {
     return new Error('uc/upd');
   }
-  const {
-    price,
-    tasks,
-    warranty,
-    image,
-    status
-  } = req.body;
+  const { price, tasks, warranty, image, status } = req.body;
   return res.json(
-    companyBuildController.update(
-      id,
-      price,
-      tasks,
-      warranty,
-      image,
-      status
-    )
+    companyBuildController.update(id, price, tasks, warranty, image, status)
   );
 });
 
-router.get('/info', async (req: Request, res: Response) => {
+router.get('/info', async (req: Request, res: Response, next: NextFunction) => {
   const { id } = req.query;
   if (typeof id !== 'string') {
-    return new Error('uc/ordl');
+    return next(ApiError.badRequest('ID incorrect or missing'));
   }
   return res.json(companyBuildController.getCompanyBuildInfo(id));
 });
 
-router.get('/parts', async (req: Request, res: Response) => {
-  const { id } = req.query;
-  if (typeof id !== 'string') {
-    return new Error('uc/ordl');
+router.get(
+  '/parts',
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.query;
+    if (typeof id !== 'string') {
+      return next(ApiError.badRequest('ID incorrect or missing'));
+    }
+    return res.json(companyBuildController.getCompanyBuildParts(id));
   }
-  return res.json(companyBuildController.getCompanyBuildParts(id));
-});
+);
 
-router.get('/software', async (req: Request, res: Response) => {
-  const { id } = req.query;
-  if (typeof id !== 'string') {
-    return new Error('uc/ordl');
+router.get(
+  '/software',
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.query;
+    if (typeof id !== 'string') {
+      return next(ApiError.badRequest('ID incorrect or missing'));
+    }
+    return res.json(companyBuildController.getCompanyBuildSoftware(id));
   }
-  return res.json(companyBuildController.getCompanyBuildSoftware(id));
-});
+);
 
-router.get('/fullinfo', async (req: Request, res: Response) => {
-  const { id } = req.query;
-  if (typeof id !== 'string') {
-    return new Error('uc/ordl');
+router.get(
+  '/fullinfo',
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.query;
+    if (typeof id !== 'string') {
+      return next(ApiError.badRequest('ID incorrect or missing'));
+    }
+    return res.json(companyBuildController.getCompanyBuildFullInfo(id));
   }
-  return res.json(companyBuildController.getCompanyBuildFullInfo(id));
-});
+);
 
 export default router;
