@@ -41,4 +41,12 @@ router.get('/orders', async (req: Request, res: Response) => {
   return res.json(userController.getUserInfoAndOrderList(id));
 });
 
+router.get('/cart', async (req: Request, res: Response) => {
+  const { id } = req.query;
+  if (typeof id !== 'string') {
+    return new Error('uc/ordl');
+  }
+  return res.json(userController.getUserCartAndContent(id));
+});
+
 export default router;

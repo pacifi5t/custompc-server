@@ -1,5 +1,5 @@
-import { UserModel } from 'models/UserModel';
-import { sqlUserInfoAndOrderList } from 'sql';
+import { UserModel } from 'models';
+import { sqlUserInfoAndOrderList, sqlUserCartAndContent } from 'sql';
 import { v4 as uuidv4 } from 'uuid';
 import { hash } from 'bcrypt';
 import db from 'db';
@@ -46,6 +46,12 @@ class UserController {
 
   async getUserInfoAndOrderList(id: string) {
     return await db.query(sqlUserInfoAndOrderList, {
+      replacements: { id: id }
+    });
+  }
+
+  async getUserCartAndContent(id: string) {
+    return await db.query(sqlUserCartAndContent, {
       replacements: { id: id }
     });
   }
