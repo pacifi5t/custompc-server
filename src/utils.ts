@@ -19,6 +19,11 @@ class ApiError extends Error {
     return new ApiError(400, message);
   }
 
+  static unauthorized(message: string): ApiError {
+    console.log(`API Error: 401 - ${message}`);
+    return new ApiError(401, message);
+  }
+
   static forbidden(message: string): ApiError {
     console.log(`API Error: 403 - ${message}`);
     return new ApiError(403, message);
