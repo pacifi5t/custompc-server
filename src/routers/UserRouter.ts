@@ -53,4 +53,12 @@ router.get('/cart', async (req: Request, res: Response, next: NextFunction) => {
   return res.json(userController.getUserCartAndContent(id));
 });
 
+router.get('/auth', async (req: Request, res: Response, next: NextFunction) => {
+  const {email, password} = req.query;
+  if (typeof email !== 'string' || typeof password !== 'string') {
+    return next(ApiError.badRequest('Incorrect data'));
+  }
+  return res.json(userController.auth(email, password, next));
+});
+
 export default router;

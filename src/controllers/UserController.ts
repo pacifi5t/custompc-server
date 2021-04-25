@@ -1,8 +1,10 @@
 import { UserModel } from 'models';
 import { sqlUserInfoAndOrderList, sqlUserCartAndContent } from 'sql';
+import { ApiError, generateJwt } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
 import { hash } from 'bcrypt';
 import db from 'db';
+import { NextFunction } from 'express';
 
 class UserController {
   async create(
@@ -54,6 +56,14 @@ class UserController {
     return await db.query(sqlUserCartAndContent, {
       replacements: { id: id }
     });
+  }
+
+  async auth(email: string, pass: string, next: NextFunction) {
+    const user = await UserModel.findOne({where: {email: email, password: pass}});
+    if(!user) {
+      return next(ApiError.notFound('Cannot find user'));
+    }
+    return await generateJwt(user.getDataValue('id'),user.getDataValue('role'));
   }
 }
 
