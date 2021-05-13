@@ -2,9 +2,10 @@ import { UserModel } from 'models';
 import { sqlUserInfoAndOrderList, sqlUserCartAndContent } from 'sql';
 import { ApiError, generateJwt } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
-import { hash } from 'bcrypt';
+import { hash, compare } from 'bcrypt';
 import db from 'db';
 import { NextFunction } from 'express';
+import { Op } from 'sequelize';
 
 class UserController {
   async create(
@@ -22,8 +23,10 @@ class UserController {
     });
   }
 
-  async get(id: string) {
-    return await UserModel.findByPk(id);
+  async get(username: string, email: string) {
+    return await UserModel.findAll({
+      where: { [Op.or]: [{ username }, { email }] }
+    });
   }
 
   async update(
@@ -59,11 +62,19 @@ class UserController {
   }
 
   async auth(email: string, pass: string, next: NextFunction) {
-    const user = await UserModel.findOne({where: {email: email, password: pass}});
-    if(!user) {
+    const user = await UserModel.findOne({
+      where: { email: email }
+    });
+    if (!user) {
       return next(ApiError.notFound('Cannot find user'));
     }
-    return await generateJwt(user.getDataValue('id'),user.getDataValue('role'));
+    const match = await compare(pass, user.getDataValue('password'));
+    if (!match) {
+      return next(ApiError.unauthorized('Wrong password'));
+    }
+
+    const id = user.getDataValue('id');
+    return [id, generateJwt(id, user.getDataValue('role'))];
   }
 }
 

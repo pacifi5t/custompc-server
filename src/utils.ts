@@ -45,7 +45,7 @@ function generateJwt(id: string, role: string) {
   if (!secret) {
     throw new Error('Cannot generate JWT!');
   }
-  return jwt.sign({ id, role }, secret, { expiresIn: '24h' });
+  return jwt.sign({ id, role }, secret, { expiresIn: '28d' });
 }
 
 export { ApiError, BuildType, generateJwt };
