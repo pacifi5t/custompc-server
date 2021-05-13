@@ -7,7 +7,7 @@ const router = Router();
 router.post('/', async (req: Request, res: Response) => {
   const { authorId, price, warranty, image, status } = req.body;
   return res.json(
-    customBuildController.create(authorId, price, warranty, image, status)
+    await customBuildController.create(authorId, price, warranty, image, status)
   );
 });
 
@@ -16,7 +16,7 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
   if (typeof id !== 'string') {
     return next(ApiError.badRequest('ID incorrect or missing'));
   }
-  return res.json(customBuildController.get(id));
+  return res.json(await customBuildController.get(id));
 });
 
 router.put('/', async (req: Request, res: Response) => {
@@ -24,17 +24,10 @@ router.put('/', async (req: Request, res: Response) => {
   if (typeof id !== 'string') {
     return new Error('uc/upd');
   }
-  const {
-    authorId,
-    price,
-    averageRating,
-    tasks,
-    warranty,
-    image,
-    status
-  } = req.body;
+  const { authorId, price, averageRating, tasks, warranty, image, status } =
+    req.body;
   return res.json(
-    customBuildController.update(
+    await customBuildController.update(
       id,
       authorId,
       price,
@@ -52,7 +45,7 @@ router.get('/info', async (req: Request, res: Response, next: NextFunction) => {
   if (typeof id !== 'string') {
     return next(ApiError.badRequest('ID incorrect or missing'));
   }
-  return res.json(customBuildController.getCustomBuildInfo(id));
+  return res.json(await customBuildController.getCustomBuildInfo(id));
 });
 
 router.get(
@@ -62,7 +55,7 @@ router.get(
     if (typeof id !== 'string') {
       return next(ApiError.badRequest('ID incorrect or missing'));
     }
-    return res.json(customBuildController.getCustomBuildParts(id));
+    return res.json(await customBuildController.getCustomBuildParts(id));
   }
 );
 
@@ -73,7 +66,7 @@ router.get(
     if (typeof id !== 'string') {
       return next(ApiError.badRequest('ID incorrect or missing'));
     }
-    return res.json(customBuildController.getCustomBuildSoftware(id));
+    return res.json(await customBuildController.getCustomBuildSoftware(id));
   }
 );
 
@@ -84,7 +77,7 @@ router.get(
     if (typeof id !== 'string') {
       return next(ApiError.badRequest('ID incorrect or missing'));
     }
-    return res.json(customBuildController.getCustomBuildFullInfo(id));
+    return res.json(await customBuildController.getCustomBuildFullInfo(id));
   }
 );
 
@@ -95,7 +88,7 @@ router.put(
     if (typeof id !== 'string') {
       return next(ApiError.badRequest('ID incorrect or missing'));
     }
-    return res.json(customBuildController.updateAverageRating(id));
+    return res.json(await customBuildController.updateAverageRating(id));
   }
 );
 

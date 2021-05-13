@@ -7,7 +7,7 @@ const router = Router();
 router.post('/', async (req: Request, res: Response) => {
   const { price, warranty, image, status } = req.body;
   return res.json(
-    companyBuildController.create(price, warranty, image, status)
+    await companyBuildController.create(price, warranty, image, status)
   );
 });
 
@@ -16,7 +16,7 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
   if (typeof id !== 'string') {
     return next(ApiError.badRequest('ID incorrect or missing'));
   }
-  return res.json(companyBuildController.get(id));
+  return res.json(await companyBuildController.get(id));
 });
 
 router.put('/', async (req: Request, res: Response) => {
@@ -26,7 +26,14 @@ router.put('/', async (req: Request, res: Response) => {
   }
   const { price, tasks, warranty, image, status } = req.body;
   return res.json(
-    companyBuildController.update(id, price, tasks, warranty, image, status)
+    await companyBuildController.update(
+      id,
+      price,
+      tasks,
+      warranty,
+      image,
+      status
+    )
   );
 });
 
@@ -35,7 +42,7 @@ router.get('/info', async (req: Request, res: Response, next: NextFunction) => {
   if (typeof id !== 'string') {
     return next(ApiError.badRequest('ID incorrect or missing'));
   }
-  return res.json(companyBuildController.getCompanyBuildInfo(id));
+  return res.json(await companyBuildController.getCompanyBuildInfo(id));
 });
 
 router.get(
@@ -45,7 +52,7 @@ router.get(
     if (typeof id !== 'string') {
       return next(ApiError.badRequest('ID incorrect or missing'));
     }
-    return res.json(companyBuildController.getCompanyBuildParts(id));
+    return res.json(await companyBuildController.getCompanyBuildParts(id));
   }
 );
 
@@ -56,7 +63,7 @@ router.get(
     if (typeof id !== 'string') {
       return next(ApiError.badRequest('ID incorrect or missing'));
     }
-    return res.json(companyBuildController.getCompanyBuildSoftware(id));
+    return res.json(await companyBuildController.getCompanyBuildSoftware(id));
   }
 );
 
@@ -67,7 +74,7 @@ router.get(
     if (typeof id !== 'string') {
       return next(ApiError.badRequest('ID incorrect or missing'));
     }
-    return res.json(companyBuildController.getCompanyBuildFullInfo(id));
+    return res.json(await companyBuildController.getCompanyBuildFullInfo(id));
   }
 );
 

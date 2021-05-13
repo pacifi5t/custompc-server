@@ -6,7 +6,7 @@ const router = Router();
 
 router.post('/', async (req: Request, res: Response) => {
   const { userId, status } = req.body;
-  return res.json(orderController.create(userId, status));
+  return res.json(await orderController.create(userId, status));
 });
 
 router.get('/', async (req: Request, res: Response, next: NextFunction) => {
@@ -14,7 +14,7 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
   if (typeof id !== 'string') {
     return next(ApiError.badRequest('ID incorrect or missing'));
   }
-  return res.json(orderController.get(id));
+  return res.json(await orderController.get(id));
 });
 
 router.put('/', async (req: Request, res: Response, next: NextFunction) => {
@@ -23,7 +23,7 @@ router.put('/', async (req: Request, res: Response, next: NextFunction) => {
     return next(ApiError.badRequest('ID incorrect or missing'));
   }
   const { userId, status } = req.body;
-  return res.json(orderController.update(id, userId, status));
+  return res.json(await orderController.update(id, userId, status));
 });
 
 router.get(
@@ -33,7 +33,7 @@ router.get(
     if (typeof id !== 'string') {
       return next(ApiError.badRequest('ID incorrect or missing'));
     }
-    return res.json(orderController.getOrderContent(id));
+    return res.json(await orderController.getOrderContent(id));
   }
 );
 

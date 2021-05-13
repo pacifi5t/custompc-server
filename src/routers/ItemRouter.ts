@@ -9,7 +9,7 @@ router.post('/', async (req: Request, res: Response) => {
   const { cartId, orderId, buildId, quantity, buildType } = req.body;
   if (buildType == 'Custom') {
     return res.json(
-      itemController.create(
+      await itemController.create(
         cartId,
         orderId,
         buildId,
@@ -19,7 +19,7 @@ router.post('/', async (req: Request, res: Response) => {
     );
   } else {
     return res.json(
-      itemController.create(
+      await itemController.create(
         cartId,
         orderId,
         buildId,
@@ -35,7 +35,7 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
   if (typeof id !== 'string') {
     return next(ApiError.badRequest('ID incorrect or missing'));
   }
-  return res.json(itemController.get(id));
+  return res.json(await itemController.get(id));
 });
 
 router.put('/', async (req: Request, res: Response) => {
@@ -46,7 +46,7 @@ router.put('/', async (req: Request, res: Response) => {
   const { cartId, orderId, buildId, quantity, buildType } = req.body;
   if (buildType == 'Custom') {
     return res.json(
-      itemController.update(
+      await itemController.update(
         id,
         cartId,
         orderId,
@@ -57,7 +57,7 @@ router.put('/', async (req: Request, res: Response) => {
     );
   } else {
     return res.json(
-      itemController.update(
+      await itemController.update(
         id,
         cartId,
         orderId,
@@ -76,7 +76,7 @@ router.get(
     if (typeof id !== 'string') {
       return next(ApiError.badRequest('ID incorrect or missing'));
     }
-    return res.json(itemController.getItemCustomBuildInfo(id));
+    return res.json(await itemController.getItemCustomBuildInfo(id));
   }
 );
 
@@ -87,7 +87,7 @@ router.get(
     if (typeof id !== 'string') {
       return next(ApiError.badRequest('ID incorrect or missing'));
     }
-    return res.json(itemController.getItemCompanyBuildInfo(id));
+    return res.json(await itemController.getItemCompanyBuildInfo(id));
   }
 );
 
