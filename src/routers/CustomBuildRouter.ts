@@ -5,9 +5,9 @@ import { ApiError } from 'utils';
 const router = Router();
 
 router.post('/', async (req: Request, res: Response) => {
-  const { authorId, price, warranty, image, status } = req.body;
+  const { authorId, name, price, warranty, image, status } = req.body;
   return res.json(
-    await customBuildController.create(authorId, price, warranty, image, status)
+    await customBuildController.create(authorId, name, price, warranty, image, status)
   );
 });
 
@@ -24,12 +24,13 @@ router.put('/', async (req: Request, res: Response) => {
   if (typeof id !== 'string') {
     return new Error('uc/upd');
   }
-  const { authorId, price, averageRating, tasks, warranty, image, status } =
+  const { authorId, name, price, averageRating, tasks, warranty, image, status } =
     req.body;
   return res.json(
     await customBuildController.update(
       id,
       authorId,
+      name,
       price,
       averageRating,
       tasks,

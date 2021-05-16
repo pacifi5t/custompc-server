@@ -11,6 +11,10 @@ CompanyBuildModel.init(
       unique: true,
       primaryKey: true
     },
+    name: {
+      type: STRING,
+      allowNull: false
+    },
     price: {
       type: INTEGER,
       allowNull: false

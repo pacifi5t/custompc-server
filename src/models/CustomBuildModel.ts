@@ -15,6 +15,10 @@ CustomBuildModel.init(
       type: UUID,
       allowNull: false
     },
+    name: {
+      type: STRING,
+      allowNull: false
+    },
     price: {
       type: INTEGER,
       allowNull: false

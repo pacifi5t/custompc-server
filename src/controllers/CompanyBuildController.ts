@@ -10,6 +10,7 @@ import {
 
 class CompanyBuildController {
   async create(
+    name: string,
     price: number,
     warranty: number,
     image: string,
@@ -17,6 +18,7 @@ class CompanyBuildController {
   ) {
     return await CompanyBuildModel.create({
       id: uuidv4(),
+      name: name,
       price: price,
       tasks: null,
       warranty: warranty,
@@ -31,6 +33,7 @@ class CompanyBuildController {
 
   async update(
     id: string,
+    name: string,
     price: number,
     tasks: string,
     warranty: number,
@@ -39,6 +42,7 @@ class CompanyBuildController {
   ) {
     return await CompanyBuildModel.create({
       id: id,
+      name: name,
       price: price,
       tasks: tasks,
       warranty: warranty,

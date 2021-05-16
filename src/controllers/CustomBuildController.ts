@@ -12,6 +12,7 @@ import {
 class CustomBuildController {
   async create(
     authorId: string,
+    name: string,
     price: number,
     warranty: number,
     image: string,
@@ -20,6 +21,7 @@ class CustomBuildController {
     return await CustomBuildModel.create({
       id: uuidv4(),
       authorId: authorId,
+      name: name,
       price: price,
       averageRating: null,
       tasks: null,
@@ -36,6 +38,7 @@ class CustomBuildController {
   async update(
     id: string,
     authorId: string,
+    name: string,
     price: number,
     averageRating: number,
     tasks: string,
@@ -46,6 +49,7 @@ class CustomBuildController {
     return await CustomBuildModel.create({
       id: id,
       authorId: authorId,
+      name: name,
       price: price,
       averageRating: averageRating,
       tasks: tasks,
