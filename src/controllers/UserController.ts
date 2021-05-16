@@ -1,4 +1,4 @@
-import { UserModel } from 'models';
+import { UserModel, CartModel } from 'models';
 import { sqlUserInfoAndOrderList, sqlUserCartAndContent } from 'sql';
 import { ApiError, generateJwt } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
@@ -14,13 +14,21 @@ class UserController {
     password: string,
     role: string
   ) {
-    return await UserModel.create({
-      id: uuidv4(),
-      username: username,
-      email: email,
-      password: await hash(password, 5),
-      role: role
-    });
+    let result;
+    let uid;
+    try {
+      uid = uuidv4();
+      result = await UserModel.create({
+        id: uid,
+        username: username,
+        email: email,
+        password: await hash(password, 5),
+        role: role
+      });
+    } finally {
+      await CartModel.create({ id: uuidv4(), userId: uid });
+    }
+    return result;
   }
 
   async get(username: string, email: string) {
@@ -74,7 +82,8 @@ class UserController {
     }
 
     const id = user.getDataValue('id');
-    return [id, generateJwt(id, user.getDataValue('role'))];
+    const role = user.getDataValue('role');
+    return [id, user.getDataValue('username'), role, generateJwt(id, role)];
   }
 }
 
