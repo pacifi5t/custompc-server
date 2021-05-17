@@ -30,12 +30,11 @@ FROM items as i
 INNER JOIN company_builds as cb ON cb.id = i.company_build_id
 WHERE i.id = :id`;
 
-export const sqlCustomBuildInfo = `
-SELECT users.username, cb.*, ratings.*
+export const sqlCustomBuildsAll = `
+SELECT users.username, cb.*, ratings.stars
 FROM custom_builds as cb
 LEFT JOIN users on users.id = cb.author_id
-LEFT JOIN ratings on ratings.build_id = cb.id
-WHERE cb.id = :id`;
+LEFT JOIN ratings on ratings.build_id = cb.id`;
 
 export const sqlCompanyBuildInfo = `
 SELECT cb.*, tasks.name

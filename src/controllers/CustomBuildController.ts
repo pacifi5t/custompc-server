@@ -1,10 +1,10 @@
-import { CustomBuildModel, UserModel } from 'models';
+import { CustomBuildModel } from 'models';
 import { v4 as uuidv4 } from 'uuid';
 import db from 'db';
 import {
   sqlCalculateAvgRating,
   sqlCustomBuildFullInfo,
-  sqlCustomBuildInfo,
+  sqlCustomBuildsAll,
   sqlCustomBuildParts,
   sqlCustomBuildSoftware
 } from 'sql';
@@ -32,7 +32,7 @@ class CustomBuildController {
   }
 
   async get(id: string) {
-    return await UserModel.findByPk(id);
+    return await CustomBuildModel.findByPk(id);
   }
 
   async update(
@@ -59,10 +59,8 @@ class CustomBuildController {
     });
   }
 
-  async getCustomBuildInfo(id: string) {
-    return db.query(sqlCustomBuildInfo, {
-      replacements: { id: id }
-    });
+  async getAll() {
+    return db.query(sqlCustomBuildsAll);
   }
 
   async getCustomBuildParts(id: string) {
@@ -88,6 +86,12 @@ class CustomBuildController {
       replacements: { id: id }
     });
   }
+
+  async delete(id: string) {
+    return await CustomBuildModel.destroy({where: {id: id}});
+  }
+
+
 }
 
 export default new CustomBuildController() ;

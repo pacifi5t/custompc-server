@@ -1,13 +1,26 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import customBuildController from 'controllers/CustomBuildController';
 import { ApiError } from 'utils';
+import fs from 'fs';
 
 const router = Router();
 
 router.post('/', async (req: Request, res: Response) => {
-  const { authorId, name, price, warranty, image, status } = req.body;
+  const { authorId, name, price, warranty, image, status, parts } = req.body;
+  /*try {
+    fs.writeFileSync('./static/builds/' + name + '.json', parts);
+  } catch (e) {
+    console.log(e);
+  }*/
   return res.json(
-    await customBuildController.create(authorId, name, price, warranty, image, status)
+    await customBuildController.create(
+      authorId,
+      name,
+      price,
+      warranty,
+      image,
+      status
+    )
   );
 });
 
@@ -24,8 +37,16 @@ router.put('/', async (req: Request, res: Response) => {
   if (typeof id !== 'string') {
     return new Error('uc/upd');
   }
-  const { authorId, name, price, averageRating, tasks, warranty, image, status } =
-    req.body;
+  const {
+    authorId,
+    name,
+    price,
+    averageRating,
+    tasks,
+    warranty,
+    image,
+    status
+  } = req.body;
   return res.json(
     await customBuildController.update(
       id,
@@ -41,12 +62,8 @@ router.put('/', async (req: Request, res: Response) => {
   );
 });
 
-router.get('/info', async (req: Request, res: Response, next: NextFunction) => {
-  const { id } = req.query;
-  if (typeof id !== 'string') {
-    return next(ApiError.badRequest('ID incorrect or missing'));
-  }
-  return res.json(await customBuildController.getCustomBuildInfo(id));
+router.get('/info', async (req: Request, res: Response) => {
+  return res.json(await customBuildController.getAll());
 });
 
 router.get(
@@ -92,5 +109,13 @@ router.put(
     return res.json(await customBuildController.updateAverageRating(id));
   }
 );
+
+router.delete('/', async (req: Request, res: Response, next: NextFunction) => {
+  const { id } = req.query;
+  if (typeof id !== 'string') {
+    return next(ApiError.badRequest('ID incorrect or missing'));
+  }
+  return res.json(await customBuildController.delete(id));
+});
 
 export default router;
