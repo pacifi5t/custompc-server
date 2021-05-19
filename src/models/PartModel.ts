@@ -28,10 +28,6 @@ PartModel.init(
       type: BOOLEAN,
       allowNull: false
     },
-    image: {
-      type: STRING,
-      allowNull: false
-    },
     specsFile: {
       type: STRING,
       allowNull: false,

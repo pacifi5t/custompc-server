@@ -24,10 +24,6 @@ SoftwareModel.init(
       type: INTEGER,
       allowNull: false
     },
-    image: {
-      type: STRING,
-      allowNull: false
-    },
     description: {
       type: STRING,
       allowNull: false
