@@ -1,93 +1,88 @@
+//Get user info & order list
 export const sqlUserInfoAndOrderList = `
-SELECT username, email, role, orders.id 
-FROM users 
+SELECT u.username, u.email, u.role, orders.id, orders.status 
+FROM users as u
 LEFT JOIN orders ON users.id = orders.user_id 
 WHERE users.id = :id
 ORDER BY orders.updated_at DESC`;
 
+//Get user's cart id & it's content
 export const sqlUserCartAndContent = `
-SELECT users.id as user_id, carts.id as cart_id, items.id as item_id
+SELECT u.id as user_id, carts.id as cart_id, i.custom_build_id, i.company_build_id
 FROM carts
-LEFT JOIN users ON users.id=carts.user_id
-LEFT JOIN items ON items.cart_id=carts.id
-WHERE users.id = :id`;
+LEFT JOIN users as u ON u.id=carts.user_id
+LEFT JOIN items as i ON i.cart_id=carts.id
+WHERE u.id = :id`;
 
+//Order's content & status by id
 export const sqlOrderContent = `
-SELECT orders.id as order_id, items.id as item_id
-FROM orders
-LEFT JOIN items ON items.cart_id=orders.id
-WHERE orders.id = :id`;
+SELECT o.id as order_id, o.status as order_status, custom_build_id, company_build_id
+FROM orders as o
+LEFT JOIN items as i ON i.cart_id=o.id
+WHERE o.id = :id`;
 
+//Info about custom build as item
 export const sqlItemCustomBuildInfo = `
-SELECT i.quantity, cb.price, cb.warranty, cb.image
+SELECT i.quantity, cb.price, cb.warranty
 FROM items as i
 INNER JOIN custom_builds as cb ON cb.id = i.custom_build_id
-WHERE i.id = :id`;
+WHERE cb.id = :id`;
 
+//Info about company build as item
 export const sqlItemCompanyBuildInfo = `
-SELECT i.quantity, cb.price, cb.warranty, cb.image
+SELECT i.quantity, cb.price, cb.warranty
 FROM items as i
 INNER JOIN company_builds as cb ON cb.id = i.company_build_id
-WHERE i.id = :id`;
+WHERE cb.id = :id`;
 
-export const sqlCustomBuildsAll = `
-SELECT users.username, cb.*, ratings.stars
+//Get all custom builds
+export const sqlAllCustomBuilds = `
+SELECT users.username, cb.price, cb.name, cb.tasks, cb.warranty, ratings.stars
 FROM custom_builds as cb
 LEFT JOIN users on users.id = cb.author_id
-LEFT JOIN ratings on ratings.build_id = cb.id`;
+LEFT JOIN ratings on ratings.build_id = cb.id
+WHERE cb.status = 'relevant'`;
 
-export const sqlCompanyBuildInfo = `
-SELECT cb.*, tasks.name
+//Get all company builds
+export const sqlAllCompanyBuilds = `
+SELECT cb.price, cb.name, cb.tasks, cb.warranty
 FROM comapny_builds as cb
 LEFT JOIN tasks on tasks.build_id = cb.id
-WHERE cb.id = :id`;
+WHERE cb.status = 'relevant'`;
 
+//Get all custom build parts
 export const sqlCustomBuildParts = `
-SELECT cb.*, parts.*
+SELECT parts.*
 FROM custom_builds as cb
 LEFT JOIN custom_builds_parts as cbp ON cbp.custom_build_id = cb.id
 LEFT JOIN parts ON parts.id = cbp.part_id
 WHERE cb.id = :id`;
 
+//Get all company build parts
 export const sqlCompanyBuildParts = `
-SELECT cb.*, parts.*
+SELECT parts.*
 FROM company_builds as cb
 LEFT JOIN company_builds_parts as cbp ON cbp.company_build_id = cb.id
 LEFT JOIN parts ON parts.id = cbp.part_id
 WHERE cb.id = :id`
 
+//Get all custom build software
 export const sqlCustomBuildSoftware = `
-SELECT cb.*, s.*
+SELECT s.*
 FROM custom_builds as cb
 LEFT JOIN custom_builds_software as cbs ON cbs.custom_build_id = cb.id
 LEFT JOIN software as s ON s.id = cbs.software_id
 WHERE cb.id = :id`
 
+//Get all company build software
 export const sqlCompanyBuildSoftware = `
-SELECT cb.*, s.*
+SELECT s.*
 FROM company_builds as cb
 LEFT JOIN company_builds_software as cbs ON cbs.company_build_id = cb.id
 LEFT JOIN software as s ON s.id = cbs.software_id
 WHERE cb.id = :id`
 
-export const sqlCustomBuildFullInfo = `
-SELECT cb.*, parts.*, s.*
-FROM custom_builds as cb
-LEFT JOIN custom_builds_parts as cbp ON cbp.custom_build_id = cb.id
-LEFT JOIN parts ON parts.id = cbp.part_id
-LEFT JOIN custom_builds_software as cbs ON cbs.custom_build_id = cb.id
-LEFT JOIN software as s ON s.id = cbs.software_id
-WHERE cb.id = :id`
-
-export const sqlCompanyBuildFullInfo = `
-SELECT cb.*, parts.*, s.*
-FROM company_builds as cb
-LEFT JOIN company_builds_parts as cbp ON cbp.company_build_id = cb.id
-LEFT JOIN parts ON parts.id = cbp.part_id
-LEFT JOIN company_builds_software as cbs ON cbs.company_build_id = cb.id
-LEFT JOIN software as s ON s.id = cbs.software_id
-WHERE cb.id = :id`
-
+//Update custom build ratings
 export const sqlCalculateAvgRating = `
 UPDATE custom_builds
 SET custom_builds.average_rating = (

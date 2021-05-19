@@ -2,11 +2,11 @@ import { CompanyBuildModel, UserModel } from 'models';
 import { v4 as uuidv4 } from 'uuid';
 import db from 'db';
 import {
-  sqlCompanyBuildFullInfo,
-  sqlCompanyBuildInfo,
+  sqlAllCompanyBuilds,
   sqlCompanyBuildParts,
   sqlCompanyBuildSoftware
 } from 'sql';
+import { BuildType, updateBuildsToPartsTable } from 'utils';
 
 class CompanyBuildController {
   async create(
@@ -14,21 +14,29 @@ class CompanyBuildController {
     price: number,
     warranty: number,
     image: string,
-    status: string
+    status: string,
+    parts: Array<string>
   ) {
-    return await CompanyBuildModel.create({
-      id: uuidv4(),
-      name: name,
-      price: price,
-      tasks: null,
-      warranty: warranty,
-      image: image,
-      status: status
-    });
-  }
+    let result;
+    const buildId = uuidv4();
 
-  async get(id: string) {
-    return await UserModel.findByPk(id);
+    try {
+      result = await CompanyBuildModel.create({
+        id: buildId,
+        name: name,
+        price: price,
+        tasks: null,
+        warranty: warranty,
+        image: image,
+        status: status
+      });
+    } catch (e) {
+      console.error(e);
+    } finally {
+      updateBuildsToPartsTable(BuildType.Company, buildId, parts);
+    }
+
+    return result;
   }
 
   async update(
@@ -38,23 +46,36 @@ class CompanyBuildController {
     tasks: string,
     warranty: number,
     image: string,
-    status: string
+    status: string,
+    parts: Array<string>
   ) {
-    return await CompanyBuildModel.create({
-      id: id,
-      name: name,
-      price: price,
-      tasks: tasks,
-      warranty: warranty,
-      image: image,
-      status: status
-    });
+    let result;
+
+    try {
+      result = await CompanyBuildModel.create({
+        id: id,
+        name: name,
+        price: price,
+        tasks: tasks,
+        warranty: warranty,
+        image: image,
+        status: status
+      });
+    } catch (e) {
+      console.error(e);
+    } finally {
+      updateBuildsToPartsTable(BuildType.Company, id, parts);
+    }
+
+    return result;
   }
 
-  async getCompanyBuildInfo(id: string) {
-    return db.query(sqlCompanyBuildInfo, {
-      replacements: { id: id }
-    });
+  async get(id: string) {
+    return await UserModel.findByPk(id);
+  }
+
+  async getAll() {
+    return db.query(sqlAllCompanyBuilds);
   }
 
   async getCompanyBuildParts(id: string) {
@@ -69,11 +90,9 @@ class CompanyBuildController {
     });
   }
 
-  async getCompanyBuildFullInfo(id: string) {
-    return db.query(sqlCompanyBuildFullInfo, {
-      replacements: { id: id }
-    });
+  async delete(id: string) {
+    return await CompanyBuildModel.destroy({ where: { id: id } });
   }
 }
 
-export default new CompanyBuildController() ;
+export default new CompanyBuildController();

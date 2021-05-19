@@ -1,3 +1,4 @@
+import db from 'db';
 import jwt from 'jsonwebtoken';
 
 enum BuildType {
@@ -48,4 +49,41 @@ function generateJwt(id: string, role: string) {
   return jwt.sign({ id, role }, secret, { expiresIn: '28d' });
 }
 
-export { ApiError, BuildType, generateJwt };
+//FIXME: those will cause fail while updating builds
+function updateBuildsToPartsTable(
+  type: BuildType,
+  buildId: string,
+  partIds: Array<string>
+) {
+  let tableName = 'custom_builds_parts';
+  if(type === BuildType.Company) {
+    tableName = 'company_builds_parts';
+  }
+
+  let sql = `INSERT INTO ${tableName} VALUES`;
+  for(const id of partIds) {
+    sql = sql + ` ('${buildId}', '${id}'), `
+  }
+
+  db.query(sql.slice(0, sql.length - 2));
+}
+
+function updateSoftwareToPartsTable(
+  type: BuildType,
+  softwareId: string,
+  partIds: Array<string>
+) {
+  let tableName = 'custom_builds_parts';
+  if(type === BuildType.Company) {
+    tableName = 'company_builds_parts';
+  }
+
+  let sql = `INSERT INTO ${tableName} VALUES`;
+  for(const id of partIds) {
+    sql = sql + ` (${softwareId}, ${id}), `
+  }
+
+  db.query(sql.slice(0, sql.length - 2));
+}
+
+export { ApiError, BuildType, generateJwt, updateBuildsToPartsTable, updateSoftwareToPartsTable };
