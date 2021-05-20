@@ -83,7 +83,7 @@ class CustomBuildController {
   }
 
   async getAll() {
-    return db.query(sqlAllCustomBuilds);
+    return (await db.query(sqlAllCustomBuilds))[0];
   }
 
   async getCustomBuildParts(id: string) {

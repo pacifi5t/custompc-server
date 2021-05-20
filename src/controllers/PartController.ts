@@ -14,15 +14,15 @@ class PartController {
     });
   }
 
-  async get(id: string) {
-    return await PartModel.findOne({
-      where: { id }
-    });
-  }
-
   async getByType(type: string) {
     return await PartModel.findAll({
       where: { type }
+    });
+  }
+
+  async get(id: string) {
+    return await PartModel.findOne({
+      where: { id }
     });
   }
 }

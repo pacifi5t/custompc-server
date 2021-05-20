@@ -33,10 +33,6 @@ class ItemController {
     }
   }
 
-  async get(id: string) {
-    return await ItemModel.findByPk(id);
-  }
-
   async update(
     id: string,
     cartId: string,
@@ -64,6 +60,10 @@ class ItemController {
         quantity: quantity
       });
     }
+  }
+
+  async get(id: string) {
+    return await ItemModel.findByPk(id);
   }
 
   async getItemCustomBuildInfo(id: string) {

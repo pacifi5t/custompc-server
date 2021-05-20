@@ -12,16 +12,16 @@ class OrderController {
     });
   }
 
-  async get(id: string) {
-    return await OrderModel.findByPk(id);
-  }
-
   async update(id: string, userId: string, status: string) {
     return OrderModel.create({
       id: id,
       userId: userId,
       status: status
     });
+  }
+
+  async get(id: string) {
+    return await OrderModel.findByPk(id);
   }
 
   async getOrderContent(id: string) {

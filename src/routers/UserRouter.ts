@@ -52,6 +52,14 @@ router.get('/cart', async (req: Request, res: Response, next: NextFunction) => {
   if (typeof id !== 'string') {
     return next(ApiError.badRequest('ID incorrect or missing'));
   }
+  return res.json(await userController.getUserCart(id));
+});
+
+router.get('/cart/content', async (req: Request, res: Response, next: NextFunction) => {
+  const { id } = req.query;
+  if (typeof id !== 'string') {
+    return next(ApiError.badRequest('ID incorrect or missing'));
+  }
   return res.json(await userController.getUserCartAndContent(id));
 });
 

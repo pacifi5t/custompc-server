@@ -1,5 +1,9 @@
 import { UserModel, CartModel } from 'models';
-import { sqlUserInfoAndOrderList, sqlUserCartAndContent } from 'sql';
+import {
+  sqlUserInfoAndOrderList,
+  sqlUserCartAndContent,
+  sqlUserCart
+} from 'sql';
 import { ApiError, generateJwt } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
 import { hash, compare } from 'bcrypt';
@@ -31,12 +35,6 @@ class UserController {
     return result;
   }
 
-  async get(username: string, email: string) {
-    return await UserModel.findAll({
-      where: { [Op.or]: [{ username }, { email }] }
-    });
-  }
-
   async update(
     id: string,
     username: string,
@@ -53,8 +51,16 @@ class UserController {
     });
   }
 
-  async delete(id: string) {
-    return await UserModel.destroy({ where: { id } });
+  async get(username: string, email: string) {
+    return await UserModel.findAll({
+      where: { [Op.or]: [{ username }, { email }] }
+    });
+  }
+
+  async getUserCart(id: string) {
+    return (await db.query(sqlUserCart, {
+      replacements: { id: id }
+    }))[0];
   }
 
   async getUserInfoAndOrderList(id: string) {
@@ -64,9 +70,11 @@ class UserController {
   }
 
   async getUserCartAndContent(id: string) {
-    return await db.query(sqlUserCartAndContent, {
-      replacements: { id: id }
-    });
+    return (
+      await db.query(sqlUserCartAndContent, {
+        replacements: { id: id }
+      })
+    )[0];
   }
 
   async auth(email: string, pass: string, next: NextFunction) {
@@ -84,6 +92,10 @@ class UserController {
     const id = user.getDataValue('id');
     const role = user.getDataValue('role');
     return [id, user.getDataValue('username'), role, generateJwt(id, role)];
+  }
+
+  async delete(id: string) {
+    return await UserModel.destroy({ where: { id } });
   }
 }
 
