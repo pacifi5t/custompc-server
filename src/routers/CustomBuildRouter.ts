@@ -5,7 +5,7 @@ import { ApiError } from 'utils';
 const router = Router();
 
 router.post('/', async (req: Request, res: Response) => {
-  const { authorId, name, price, warranty, status, parts } = req.body;
+  const { authorId, name, price, warranty, status, parts, soft } = req.body;
   return res.json(
     await customBuildController.create(
       authorId,
@@ -13,7 +13,8 @@ router.post('/', async (req: Request, res: Response) => {
       price,
       warranty,
       status,
-      parts
+      parts,
+      soft
     )
   );
 });
@@ -40,7 +41,8 @@ router.put('/', async (req: Request, res: Response, next: NextFunction) => {
     tasks,
     warranty,
     status,
-    parts
+    parts,
+    soft
   } = req.body;
   
   return res.json(
@@ -53,7 +55,8 @@ router.put('/', async (req: Request, res: Response, next: NextFunction) => {
       tasks,
       warranty,
       status,
-      parts
+      parts,
+      soft
     )
   );
 });

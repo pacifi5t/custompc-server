@@ -7,7 +7,7 @@ import {
   sqlCustomBuildParts,
   sqlCustomBuildSoftware
 } from 'sql';
-import { BuildType, updateBuildsToPartsTable } from 'utils';
+import { BuildType, updateBuildsToPartsTable, updateSoftwareToPartsTable } from 'utils';
 
 class CustomBuildController {
   async create(
@@ -16,7 +16,8 @@ class CustomBuildController {
     price: number,
     warranty: number,
     status: string,
-    parts: Array<string>
+    parts: Array<string>,
+    soft: Array<string>
   ) {
     let result;
     const buildId = uuidv4();
@@ -36,6 +37,7 @@ class CustomBuildController {
       console.error(e);
     } finally {
       updateBuildsToPartsTable(BuildType.Custom, buildId, parts);
+      updateSoftwareToPartsTable(BuildType.Custom, buildId, soft);
     }
 
     return result;
@@ -50,7 +52,8 @@ class CustomBuildController {
     tasks: string,
     warranty: number,
     status: string,
-    parts: Array<string>
+    parts: Array<string>,
+    soft: Array<string>
   ) {
     let result;
 
@@ -69,6 +72,7 @@ class CustomBuildController {
       console.error(e);
     } finally {
       updateBuildsToPartsTable(BuildType.Custom, id, parts);
+      updateSoftwareToPartsTable(BuildType.Custom, id, soft);
     }
 
     return result;

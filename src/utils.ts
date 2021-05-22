@@ -70,17 +70,17 @@ function updateBuildsToPartsTable(
 
 function updateSoftwareToPartsTable(
   type: BuildType,
-  softwareId: string,
-  partIds: Array<string>
+  buildId: string,
+  softwareIds: Array<string>
 ) {
-  let tableName = 'custom_builds_parts';
+  let tableName = 'custom_builds_software';
   if(type === BuildType.Company) {
-    tableName = 'company_builds_parts';
+    tableName = 'company_builds_software';
   }
 
   let sql = `INSERT INTO ${tableName} VALUES`;
-  for(const id of partIds) {
-    sql = sql + ` (${softwareId}, ${id}), `
+  for(const id of softwareIds) {
+    sql = sql + ` ('${buildId}', '${id}'), `
   }
 
   db.query(sql.slice(0, sql.length - 2));

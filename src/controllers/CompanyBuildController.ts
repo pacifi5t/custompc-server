@@ -6,7 +6,7 @@ import {
   sqlCompanyBuildParts,
   sqlCompanyBuildSoftware
 } from 'sql';
-import { BuildType, updateBuildsToPartsTable } from 'utils';
+import { BuildType, updateBuildsToPartsTable, updateSoftwareToPartsTable } from 'utils';
 
 class CompanyBuildController {
   async create(
@@ -14,7 +14,8 @@ class CompanyBuildController {
     price: number,
     warranty: number,
     status: string,
-    parts: Array<string>
+    parts: Array<string>,
+    soft: Array<string>
   ) {
     let result;
     const buildId = uuidv4();
@@ -32,6 +33,7 @@ class CompanyBuildController {
       console.error(e);
     } finally {
       updateBuildsToPartsTable(BuildType.Company, buildId, parts);
+      updateSoftwareToPartsTable(BuildType.Company, buildId, soft);
     }
 
     return result;
@@ -44,7 +46,8 @@ class CompanyBuildController {
     tasks: string,
     warranty: number,
     status: string,
-    parts: Array<string>
+    parts: Array<string>,
+    soft: Array<string>
   ) {
     let result;
 
@@ -61,6 +64,7 @@ class CompanyBuildController {
       console.error(e);
     } finally {
       updateBuildsToPartsTable(BuildType.Company, id, parts);
+      updateSoftwareToPartsTable(BuildType.Company, id, soft);
     }
 
     return result;
