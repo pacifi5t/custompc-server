@@ -9,7 +9,6 @@ class PartController {
       name: name,
       price: price,
       inStock: true,
-      image: '',
       specsFile: specsFile
     });
   }

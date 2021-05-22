@@ -34,10 +34,6 @@ CustomBuildModel.init(
       allowNull: false,
       defaultValue: 1
     },
-    image: {
-      type: STRING,
-      allowNull: false
-    },
     status: {
       type: STRING,
       allowNull: false,

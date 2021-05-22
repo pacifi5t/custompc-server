@@ -1,6 +1,5 @@
-//Get user info & order list
-//TODO: FIX
-export const sqlUserInfoAndOrderList = `
+//Get user order list
+export const sqlUserOrderList = `
 SELECT orders.id, orders.status 
 FROM users as u
 LEFT JOIN orders ON users.id = orders.user_id 

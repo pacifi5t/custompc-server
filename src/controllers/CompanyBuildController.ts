@@ -13,7 +13,6 @@ class CompanyBuildController {
     name: string,
     price: number,
     warranty: number,
-    image: string,
     status: string,
     parts: Array<string>
   ) {
@@ -27,7 +26,6 @@ class CompanyBuildController {
         price: price,
         tasks: null,
         warranty: warranty,
-        image: image,
         status: status
       });
     } catch (e) {
@@ -45,7 +43,6 @@ class CompanyBuildController {
     price: number,
     tasks: string,
     warranty: number,
-    image: string,
     status: string,
     parts: Array<string>
   ) {
@@ -58,7 +55,6 @@ class CompanyBuildController {
         price: price,
         tasks: tasks,
         warranty: warranty,
-        image: image,
         status: status
       });
     } catch (e) {

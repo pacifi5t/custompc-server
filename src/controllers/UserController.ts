@@ -1,6 +1,6 @@
 import { UserModel, CartModel } from 'models';
 import {
-  sqlUserInfoAndOrderList,
+  sqlUserOrderList,
   sqlUserCartAndContent,
   sqlUserCart
 } from 'sql';
@@ -64,7 +64,7 @@ class UserController {
   }
 
   async getUserInfoAndOrderList(id: string) {
-    return await db.query(sqlUserInfoAndOrderList, {
+    return await db.query(sqlUserOrderList, {
       replacements: { id: id }
     });
   }

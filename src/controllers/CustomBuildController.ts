@@ -15,7 +15,6 @@ class CustomBuildController {
     name: string,
     price: number,
     warranty: number,
-    image: string,
     status: string,
     parts: Array<string>
   ) {
@@ -31,7 +30,6 @@ class CustomBuildController {
         averageRating: null,
         tasks: null,
         warranty: warranty,
-        image: image,
         status: status
       });
     } catch (e) {
@@ -51,7 +49,6 @@ class CustomBuildController {
     averageRating: number,
     tasks: string,
     warranty: number,
-    image: string,
     status: string,
     parts: Array<string>
   ) {
@@ -66,7 +63,6 @@ class CustomBuildController {
         averageRating: averageRating,
         tasks: tasks,
         warranty: warranty,
-        image: image,
         status: status
       });
     } catch (e) {

@@ -5,9 +5,9 @@ import { ApiError } from 'utils';
 const router = Router();
 
 router.post('/', async (req: Request, res: Response) => {
-  const { name, price, warranty, image, status, parts } = req.body;
+  const { name, price, warranty, status, parts } = req.body;
   return res.json(
-    await companyBuildController.create(name, price, warranty, image, status, parts)
+    await companyBuildController.create(name, price, warranty, status, parts)
   );
 });
 
@@ -24,7 +24,7 @@ router.put('/', async (req: Request, res: Response, next: NextFunction) => {
   if (typeof id !== 'string') {
     return next(ApiError.badRequest('ID incorrect or missing'));
   }
-  const { name, price, tasks, warranty, image, status, parts } = req.body;
+  const { name, price, tasks, warranty, status, parts } = req.body;
   return res.json(
     await companyBuildController.update(
       id,
@@ -32,7 +32,6 @@ router.put('/', async (req: Request, res: Response, next: NextFunction) => {
       price,
       tasks,
       warranty,
-      image,
       status,
       parts
     )
