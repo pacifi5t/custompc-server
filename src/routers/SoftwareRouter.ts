@@ -1,12 +1,16 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import softwareController from 'controllers/SoftwareController';
-import { ApiError } from 'utils';
+import { ApiError } from 'ApiError';
 
 const router = Router();
 
-router.post('/', async (req: Request, res: Response) => {
+router.post('/', async (req: Request, res: Response, next: NextFunction) => {
   const { type, name, price } = req.body;
-  return res.json(await softwareController.create(type, name, price));
+  try {
+    res.json(await softwareController.create(type, name, price));
+  } catch (err) {
+    next(err);
+  }
 });
 
 router.get('/', async (req: Request, res: Response, next: NextFunction) => {
@@ -14,7 +18,11 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
   if (typeof id !== 'string') {
     return next(ApiError.badRequest('ID is incorrect or missing'));
   }
-  return res.json(await softwareController.get(id));
+  try {
+    res.json(await softwareController.get(id));
+  } catch (err) {
+    next(err);
+  }
 });
 
 router.get('/type', async (req: Request, res: Response, next: NextFunction) => {
@@ -22,7 +30,11 @@ router.get('/type', async (req: Request, res: Response, next: NextFunction) => {
   if (typeof type !== 'string') {
     return next(ApiError.badRequest('Type is incorrect or missing'));
   }
-  return res.json(await softwareController.getByType(type));
+  try {
+    res.json(await softwareController.getByType(type));
+  } catch (err) {
+    next(err);
+  }
 });
 
 export default router;

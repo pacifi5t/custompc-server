@@ -1,15 +1,12 @@
 import { UserModel, CartModel } from 'models';
-import {
-  sqlUserOrderList,
-  sqlUserCartAndContent,
-  sqlUserCart
-} from 'sql';
-import { ApiError, generateJwt } from 'utils';
+import { sqlUserOrderList, sqlUserCartAndContent, sqlUserCart } from 'sql';
+import { generateJwt } from 'utils';
+import { ApiError } from 'ApiError';
 import { v4 as uuidv4 } from 'uuid';
 import { hash, compare } from 'bcrypt';
-import db from 'db';
 import { NextFunction } from 'express';
 import { Op } from 'sequelize';
+import db from 'db';
 
 class UserController {
   async create(
@@ -58,9 +55,11 @@ class UserController {
   }
 
   async getUserCart(id: string) {
-    return (await db.query(sqlUserCart, {
-      replacements: { id: id }
-    }))[0];
+    return (
+      await db.query(sqlUserCart, {
+        replacements: { id: id }
+      })
+    )[0];
   }
 
   async getUserInfoAndOrderList(id: string) {

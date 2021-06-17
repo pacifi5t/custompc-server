@@ -19,8 +19,8 @@ async function start() {
     await db.authenticate();
     //await db.sync();
     app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
-  } catch (er) {
-    console.error(er);
+  } catch (err) {
+    console.error(err);
   }
 }
 

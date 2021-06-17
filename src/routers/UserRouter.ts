@@ -1,12 +1,16 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import userController from 'controllers/UserController';
-import { ApiError } from 'utils';
+import { ApiError } from 'ApiError';
 
 const router = Router();
 
-router.post('/', async (req: Request, res: Response) => {
+router.post('/', async (req: Request, res: Response, next: NextFunction) => {
   const { username, email, password, role } = req.body;
-  return res.json(await userController.create(username, email, password, role));
+  try {
+    res.json(await userController.create(username, email, password, role));
+  } catch (err) {
+    next(err);
+  }
 });
 
 router.get('/', async (req: Request, res: Response, next: NextFunction) => {
@@ -14,7 +18,11 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
   if (typeof username !== 'string' || typeof email !== 'string') {
     return next(ApiError.badRequest('Invalid username or email'));
   }
-  return res.json(await userController.get(username, email));
+  try {
+    res.json(await userController.get(username, email));
+  } catch (err) {
+    next(err);
+  }
 });
 
 router.put('/', async (req: Request, res: Response, next: NextFunction) => {
@@ -23,9 +31,11 @@ router.put('/', async (req: Request, res: Response, next: NextFunction) => {
     return next(ApiError.badRequest('ID incorrect or missing'));
   }
   const { username, email, password, role } = req.body;
-  return res.json(
-    await userController.update(id, username, email, password, role)
-  );
+  try {
+    res.json(await userController.update(id, username, email, password, role));
+  } catch (err) {
+    next(err);
+  }
 });
 
 router.delete('/', async (req: Request, res: Response, next: NextFunction) => {
@@ -33,7 +43,11 @@ router.delete('/', async (req: Request, res: Response, next: NextFunction) => {
   if (typeof id !== 'string') {
     return next(ApiError.badRequest('ID incorrect or missing'));
   }
-  return res.json(await userController.delete(id));
+  try {
+    res.json(await userController.delete(id));
+  } catch (err) {
+    next(err);
+  }
 });
 
 router.get(
@@ -43,7 +57,11 @@ router.get(
     if (typeof id !== 'string') {
       return next(ApiError.badRequest('ID incorrect or missing'));
     }
-    return res.json(await userController.getUserInfoAndOrderList(id));
+    try {
+      res.json(await userController.getUserInfoAndOrderList(id));
+    } catch (err) {
+      next(err);
+    }
   }
 );
 
@@ -52,23 +70,38 @@ router.get('/cart', async (req: Request, res: Response, next: NextFunction) => {
   if (typeof id !== 'string') {
     return next(ApiError.badRequest('ID incorrect or missing'));
   }
-  return res.json(await userController.getUserCart(id));
+  try {
+    res.json(await userController.getUserCart(id));
+  } catch (err) {
+    next(err);
+  }
 });
 
-router.get('/cart/content', async (req: Request, res: Response, next: NextFunction) => {
-  const { id } = req.query;
-  if (typeof id !== 'string') {
-    return next(ApiError.badRequest('ID incorrect or missing'));
+router.get(
+  '/cart/content',
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.query;
+    if (typeof id !== 'string') {
+      return next(ApiError.badRequest('ID incorrect or missing'));
+    }
+    try {
+      res.json(await userController.getUserCartAndContent(id));
+    } catch (err) {
+      next(err);
+    }
   }
-  return res.json(await userController.getUserCartAndContent(id));
-});
+);
 
 router.get('/auth', async (req: Request, res: Response, next: NextFunction) => {
   const { email, password } = req.query;
   if (typeof email !== 'string' || typeof password !== 'string') {
     return next(ApiError.badRequest('Incorrect data'));
   }
-  return res.json(await userController.auth(email, password, next));
+  try {
+    res.json(await userController.auth(email, password, next));
+  } catch (err) {
+    next(err);
+  }
 });
 
 export default router;

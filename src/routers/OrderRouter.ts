@@ -1,12 +1,16 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import orderController from 'controllers/OrderController';
-import { ApiError } from 'utils';
+import { ApiError } from 'ApiError';
 
 const router = Router();
 
-router.post('/', async (req: Request, res: Response) => {
+router.post('/', async (req: Request, res: Response, next: NextFunction) => {
   const { userId, status } = req.body;
-  return res.json(await orderController.create(userId, status));
+  try {
+    res.json(await orderController.create(userId, status));
+  } catch (err) {
+    next(err);
+  }
 });
 
 router.get('/', async (req: Request, res: Response, next: NextFunction) => {
@@ -14,7 +18,11 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
   if (typeof id !== 'string') {
     return next(ApiError.badRequest('ID incorrect or missing'));
   }
-  return res.json(await orderController.get(id));
+  try {
+    res.json(await orderController.get(id));
+  } catch (err) {
+    next(err);
+  }
 });
 
 router.put('/', async (req: Request, res: Response, next: NextFunction) => {
@@ -23,7 +31,11 @@ router.put('/', async (req: Request, res: Response, next: NextFunction) => {
     return next(ApiError.badRequest('ID incorrect or missing'));
   }
   const { userId, status } = req.body;
-  return res.json(await orderController.update(id, userId, status));
+  try {
+    res.json(await orderController.update(id, userId, status));
+  } catch (err) {
+    next(err);
+  }
 });
 
 router.get(
@@ -33,7 +45,11 @@ router.get(
     if (typeof id !== 'string') {
       return next(ApiError.badRequest('ID incorrect or missing'));
     }
-    return res.json(await orderController.getOrderContent(id));
+    try {
+      res.json(await orderController.getOrderContent(id));
+    } catch (err) {
+      next(err);
+    }
   }
 );
 

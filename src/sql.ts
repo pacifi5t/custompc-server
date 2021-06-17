@@ -1,7 +1,7 @@
 //Get user order list
 export const sqlUserOrderList = `
 SELECT orders.id, orders.status 
-FROM users as u
+FROM users
 LEFT JOIN orders ON users.id = orders.user_id 
 WHERE users.id = :id
 ORDER BY orders.updated_at DESC`;

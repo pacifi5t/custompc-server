@@ -1,32 +1,19 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import itemController from 'controllers/ItemController';
 import { BuildType } from 'utils';
-import { ApiError } from 'utils';
+import { ApiError } from 'ApiError';
 
 const router = Router();
 
-router.post('/', async (req: Request, res: Response) => {
+router.post('/', async (req: Request, res: Response, next: NextFunction) => {
   const { cartId, orderId, buildId, quantity, buildType } = req.body;
-  if (buildType == 'Custom') {
-    return res.json(
-      await itemController.create(
-        cartId,
-        orderId,
-        buildId,
-        quantity,
-        BuildType.Custom
-      )
+  const tempType = buildType == 'Custom' ? BuildType.Custom : BuildType.Company;
+  try {
+    res.json(
+      await itemController.create(cartId, orderId, buildId, quantity, tempType)
     );
-  } else {
-    return res.json(
-      await itemController.create(
-        cartId,
-        orderId,
-        buildId,
-        quantity,
-        BuildType.Company
-      )
-    );
+  } catch (err) {
+    next(err);
   }
 });
 
@@ -35,37 +22,33 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
   if (typeof id !== 'string') {
     return next(ApiError.badRequest('ID incorrect or missing'));
   }
-  return res.json(await itemController.get(id));
+  try {
+    res.json(await itemController.get(id));
+  } catch (err) {
+    next(err);
+  }
 });
 
-router.put('/', async (req: Request, res: Response) => {
+router.put('/', async (req: Request, res: Response, next: NextFunction) => {
   const { id } = req.query;
   if (typeof id !== 'string') {
-    return new Error('uc/upd');
+    return next(ApiError.badRequest('ID incorrect or missing'));
   }
   const { cartId, orderId, buildId, quantity, buildType } = req.body;
-  if (buildType == 'Custom') {
-    return res.json(
+  const tempType = buildType == 'Custom' ? BuildType.Custom : BuildType.Company;
+  try {
+    res.json(
       await itemController.update(
         id,
         cartId,
         orderId,
         buildId,
         quantity,
-        BuildType.Custom
+        tempType
       )
     );
-  } else {
-    return res.json(
-      await itemController.update(
-        id,
-        cartId,
-        orderId,
-        buildId,
-        quantity,
-        BuildType.Company
-      )
-    );
+  } catch (err) {
+    next(err);
   }
 });
 
@@ -76,7 +59,11 @@ router.get(
     if (typeof id !== 'string') {
       return next(ApiError.badRequest('ID incorrect or missing'));
     }
-    return res.json(await itemController.getItemCustomBuildInfo(id));
+    try {
+      res.json(await itemController.getItemCustomBuildInfo(id));
+    } catch (err) {
+      next(err);
+    }
   }
 );
 
@@ -87,7 +74,11 @@ router.get(
     if (typeof id !== 'string') {
       return next(ApiError.badRequest('ID incorrect or missing'));
     }
-    return res.json(await itemController.getItemCompanyBuildInfo(id));
+    try {
+      res.json(await itemController.getItemCompanyBuildInfo(id));
+    } catch (err) {
+      next(err);
+    }
   }
 );
 
