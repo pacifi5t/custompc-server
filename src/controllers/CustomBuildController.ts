@@ -87,21 +87,21 @@ class CustomBuildController {
   }
 
   async getCustomBuildParts(id: string) {
-    return db.query(sqlCustomBuildParts, {
+    return (await db.query(sqlCustomBuildParts, {
       replacements: { id: id }
-    });
+    }))[0];
   }
 
   async getCustomBuildSoftware(id: string) {
-    return db.query(sqlCustomBuildSoftware, {
+    return (await db.query(sqlCustomBuildSoftware, {
       replacements: { id: id }
-    });
+    }))[0];
   }
 
   async updateAverageRating(id: string) {
-    return db.query(sqlCalculateAvgRating, {
+    return (await db.query(sqlCalculateAvgRating, {
       replacements: { id: id }
-    });
+    }))[0];
   }
 
   async delete(id: string) {
