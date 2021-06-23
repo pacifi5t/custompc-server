@@ -6,7 +6,11 @@ import {
   sqlCompanyBuildParts,
   sqlCompanyBuildSoftware
 } from 'sql';
-import { BuildType, updateBuildsToPartsTable, updateSoftwareToPartsTable } from 'utils';
+import {
+  BuildType,
+  updateBuildsToPartsTable,
+  updateSoftwareToPartsTable
+} from 'utils';
 
 class CompanyBuildController {
   async create(
@@ -91,7 +95,10 @@ class CompanyBuildController {
   }
 
   async delete(id: string) {
-    return await CompanyBuildModel.destroy({ where: { id: id } });
+    return await CompanyBuildModel.update(
+      { status: 'removed' },
+      { where: { id: id } }
+    );
   }
 }
 

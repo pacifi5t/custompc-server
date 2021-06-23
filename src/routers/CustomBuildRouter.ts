@@ -138,4 +138,20 @@ router.delete('/', async (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
+router.post('/pdf', async (req: Request, res: Response, next: NextFunction) => {
+  const {
+    name,
+    price,
+    tasks,
+    warranty,
+    parts,
+    soft
+  } = req.body;
+  try {
+    res.json(await customBuildController.createPdf(name, price, tasks, warranty, parts, soft));
+  } catch (err) {
+    next(err);
+  }
+});
+
 export default router;
