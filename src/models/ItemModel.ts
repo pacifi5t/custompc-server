@@ -35,17 +35,7 @@ ItemModel.init(
     modelName: 'Item',
     tableName: 'items',
     timestamps: false,
-    underscored: true,
-    validate: {
-      hasOnlyOneBuildId() {
-        if (this.customBuildId === null && this.companyBuildId === null) {
-          throw new Error(`None of build_id's were assigned!`);
-        }
-        if (this.customBuildId !== null && this.companyBuildId !== null) {
-          throw new Error(`Both of build_id's were assigned!`);
-        }
-      }
-    }
+    underscored: true
   }
 );
 

@@ -63,9 +63,9 @@ class UserController {
   }
 
   async getUserInfoAndOrderList(id: string) {
-    return await db.query(sqlUserOrderList, {
+    return (await db.query(sqlUserOrderList, {
       replacements: { id: id }
-    });
+    }))[0];
   }
 
   async getUserCartAndContent(id: string) {
