@@ -49,7 +49,7 @@ class UserController {
   }
 
   async get(username: string, email: string) {
-    return await UserModel.findAll({
+    return await UserModel.findOne({
       where: { [Op.or]: [{ username }, { email }] }
     });
   }

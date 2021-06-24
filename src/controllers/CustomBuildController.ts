@@ -140,7 +140,8 @@ class CustomBuildController {
       ['storage', 'Storage drives'],
       ['cooling', 'Cooling'],
       ['case', 'Case'],
-      ['os', 'Preinstalled OS']
+      ['os', 'Preinstalled OS'],
+      ['office', 'Office suite']
     ]);
     const doc = new pdfkit();
 
