@@ -116,4 +116,13 @@ router.post('/pdf', async (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
+router.post('/rating', async (req: Request, res: Response, next: NextFunction) => {
+  const {buildId, value, authorId, message} = req.body;
+  try {
+    res.json(await customBuildController.leaveRating(buildId, value, authorId, message));
+  } catch (err) {
+    next(err);
+  }
+});
+
 export default router;

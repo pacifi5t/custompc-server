@@ -1,4 +1,9 @@
-import { CustomBuildModel, PartModel, SoftwareModel } from 'models';
+import {
+  CustomBuildModel,
+  PartModel,
+  RatingModel,
+  SoftwareModel
+} from 'models';
 import { v4 as uuidv4 } from 'uuid';
 import pdfkit from 'pdfkit';
 import fs from 'fs';
@@ -174,6 +179,44 @@ class CustomBuildController {
       .fontSize(16)
       .list(sList);
     doc.end();
+  }
+
+  async leaveRating(
+    buildId: string,
+    value: number,
+    authorId: string,
+    message: string
+  ) {
+    const existingRating = await RatingModel.findOne({
+      where: {
+        buildId: buildId,
+        authorId: authorId
+      }
+    });
+
+    if (existingRating !== null) {
+      return await RatingModel.update(
+        { value: value, message: message },
+        {
+          where: {
+            buildId: buildId,
+            authorId: authorId
+          }
+        }
+      );
+    }
+
+    await RatingModel.create({
+      id: uuidv4(),
+      buildId: buildId,
+      value: value,
+      authorId: authorId,
+      message: message
+    });
+
+    await db.query(sqlCalculateAvgRating, {
+      replacements: { id: buildId }
+    });
   }
 }
 

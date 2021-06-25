@@ -43,7 +43,7 @@ WHERE cb.id = :id`;
 
 //Get all custom builds
 export const sqlAllCustomBuilds = `
-SELECT users.username, cb.id, cb.price, cb.name, cb.tasks, cb.warranty, ratings.stars
+SELECT users.username, cb.id, cb.price, cb.name, cb.tasks, cb.warranty, ratings.value as rating
 FROM custom_builds as cb
 LEFT JOIN users on users.id = cb.author_id
 LEFT JOIN ratings on ratings.build_id = cb.id
@@ -92,7 +92,7 @@ WHERE cb.id = :id`
 export const sqlCalculateAvgRating = `
 UPDATE custom_builds
 SET custom_builds.average_rating = (
-    SELECT AVG(ratings.stars) as avg_rating
+    SELECT AVG(ratings.value) as avg_rating
     FROM ratings
     WHERE ratings.build_id = :id
 )

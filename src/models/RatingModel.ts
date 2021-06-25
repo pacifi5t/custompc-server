@@ -19,7 +19,7 @@ RatingModel.init(
       type: UUID,
       allowNull: false
     },
-    stars: {
+    value: {
       type: INTEGER,
       allowNull: false
     },
