@@ -16,9 +16,10 @@ class CompanyBuildController {
   async create(
     name: string,
     price: number,
+    tasks: string,
     warranty: number,
     status: string,
-    parts: Array<string>,
+    parts: Array<string> | Array<Array<string>>,
     soft: Array<string>
   ) {
     let result;
@@ -29,37 +30,6 @@ class CompanyBuildController {
         id: buildId,
         name: name,
         price: price,
-        tasks: null,
-        warranty: warranty,
-        status: status
-      });
-    } catch (e) {
-      console.error(e);
-    } finally {
-      updateBuildsToPartsTable(BuildType.Company, buildId, parts);
-      updateSoftwareToPartsTable(BuildType.Company, buildId, soft);
-    }
-
-    return result;
-  }
-
-  async update(
-    id: string,
-    name: string,
-    price: number,
-    tasks: string,
-    warranty: number,
-    status: string,
-    parts: Array<string>,
-    soft: Array<string>
-  ) {
-    let result;
-
-    try {
-      result = await CompanyBuildModel.create({
-        id: id,
-        name: name,
-        price: price,
         tasks: tasks,
         warranty: warranty,
         status: status
@@ -67,8 +37,17 @@ class CompanyBuildController {
     } catch (e) {
       console.error(e);
     } finally {
-      updateBuildsToPartsTable(BuildType.Company, id, parts);
-      updateSoftwareToPartsTable(BuildType.Company, id, soft);
+      const tempArr = new Array<string>();
+
+      for (const elem of parts) {
+        if (typeof elem === 'string') {
+          tempArr.push(elem);
+        } else {
+          elem.forEach((val) => tempArr.push(val));
+        }
+      }
+      updateBuildsToPartsTable(BuildType.Company, buildId, tempArr);
+      updateSoftwareToPartsTable(BuildType.Company, buildId, soft);
     }
 
     return result;

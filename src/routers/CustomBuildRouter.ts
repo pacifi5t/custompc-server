@@ -35,44 +35,6 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-router.put('/', async (req: Request, res: Response, next: NextFunction) => {
-  const { id } = req.query;
-  if (typeof id !== 'string') {
-    return next(ApiError.badRequest('ID incorrect or missing'));
-  }
-
-  const {
-    authorId,
-    name,
-    price,
-    averageRating,
-    tasks,
-    warranty,
-    status,
-    parts,
-    soft
-  } = req.body;
-
-  try {
-    res.json(
-      await customBuildController.update(
-        id,
-        authorId,
-        name,
-        price,
-        averageRating,
-        tasks,
-        warranty,
-        status,
-        parts,
-        soft
-      )
-    );
-  } catch (err) {
-    next(err);
-  }
-});
-
 router.get('/all', async (req: Request, res: Response, next: NextFunction) => {
   try {
     res.json(await customBuildController.getAll());

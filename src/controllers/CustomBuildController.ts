@@ -22,7 +22,7 @@ class CustomBuildController {
     price: number,
     warranty: number,
     status: string,
-    parts: Array<string>,
+    parts: Array<string> | Array<Array<string>>,
     soft: Array<string>
   ) {
     let result;
@@ -42,43 +42,17 @@ class CustomBuildController {
     } catch (e) {
       console.error(e);
     } finally {
-      updateBuildsToPartsTable(BuildType.Custom, buildId, parts);
+      const tempArr = new Array<string>();
+
+      for (const elem of parts) {
+        if (typeof elem === 'string') {
+          tempArr.push(elem);
+        } else {
+          elem.forEach((val) => tempArr.push(val));
+        }
+      }
+      updateBuildsToPartsTable(BuildType.Custom, buildId, tempArr);
       updateSoftwareToPartsTable(BuildType.Custom, buildId, soft);
-    }
-
-    return result;
-  }
-
-  async update(
-    id: string,
-    authorId: string,
-    name: string,
-    price: number,
-    averageRating: number,
-    tasks: string,
-    warranty: number,
-    status: string,
-    parts: Array<string>,
-    soft: Array<string>
-  ) {
-    let result;
-
-    try {
-      result = await CustomBuildModel.create({
-        id: id,
-        authorId: authorId,
-        name: name,
-        price: price,
-        averageRating: averageRating,
-        tasks: tasks,
-        warranty: warranty,
-        status: status
-      });
-    } catch (e) {
-      console.error(e);
-    } finally {
-      updateBuildsToPartsTable(BuildType.Custom, id, parts);
-      updateSoftwareToPartsTable(BuildType.Custom, id, soft);
     }
 
     return result;
