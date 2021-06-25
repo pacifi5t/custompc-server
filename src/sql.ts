@@ -1,6 +1,6 @@
 //Get user order list
 export const sqlUserOrderList = `
-SELECT orders.id, orders.status 
+SELECT orders.id, orders.status, orders.created_at
 FROM users
 LEFT JOIN orders ON users.id = orders.user_id 
 WHERE users.id = :id
@@ -22,9 +22,9 @@ WHERE u.id = :id`;
 
 //Order's content & status by id
 export const sqlOrderContent = `
-SELECT o.id as order_id, o.status as order_status, custom_build_id, company_build_id
+SELECT i.custom_build_id, i.company_build_id
 FROM orders as o
-LEFT JOIN items as i ON i.cart_id=o.id
+LEFT JOIN items as i ON i.order_id=o.id
 WHERE o.id = :id`;
 
 //Info about custom build as item

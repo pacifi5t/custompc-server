@@ -43,9 +43,11 @@ class OrderController {
   }
 
   async getOrderContent(id: string) {
-    return await db.query(sqlOrderContent, {
-      replacements: { id: id }
-    });
+    return (
+      await db.query(sqlOrderContent, {
+        replacements: { id: id }
+      })
+    )[0];
   }
 }
 
