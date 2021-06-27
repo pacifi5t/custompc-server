@@ -125,4 +125,13 @@ router.post('/rating', async (req: Request, res: Response, next: NextFunction) =
   }
 });
 
+router.post('/tasks', async (req: Request, res: Response, next: NextFunction) => {
+  const {parts} = req.body;
+  try {
+    res.json(await customBuildController.calculateTasks(parts));
+  } catch (err) {
+    next(err);
+  }
+});
+
 export default router;

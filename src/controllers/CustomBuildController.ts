@@ -135,7 +135,8 @@ class CustomBuildController {
     doc
       .fontSize(16)
       .text(
-        `Price: ${price} $\nTasks: ${tasks}\nWarrany: ${warranty} year(s)\n`
+        //`Price: ${price} $\nTasks: ${tasks}\nWarrany: ${warranty} year(s)\n`
+        `Price: ${price} $\nWarrany: ${warranty} year(s)\n`
       )
       .moveDown();
 
@@ -217,6 +218,22 @@ class CustomBuildController {
     await db.query(sqlCalculateAvgRating, {
       replacements: { id: buildId }
     });
+  }
+
+  async calculateTasks(parts: Array<string> | Array<Array<string>>) {
+    const types = ['cpu', 'ram', 'gpu'];
+    let p = new Array<any>();
+    
+    for(const type of types) {
+      const a = await PartModel.findAll({
+        where: { type }
+      });
+      console.log(a);
+      
+      p = p.concat(a);
+    }
+    console.log(p);
+    
   }
 }
 

@@ -43,10 +43,9 @@ WHERE cb.id = :id`;
 
 //Get all custom builds
 export const sqlAllCustomBuilds = `
-SELECT users.username, cb.id, cb.price, cb.name, cb.tasks, cb.warranty, ratings.value as rating
+SELECT users.username, cb.id, cb.price, cb.name, cb.tasks, cb.warranty, cb.average_rating as rating
 FROM custom_builds as cb
 LEFT JOIN users on users.id = cb.author_id
-LEFT JOIN ratings on ratings.build_id = cb.id
 WHERE cb.status = 'relevant'`;
 
 //Get all company builds
