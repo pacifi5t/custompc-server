@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { NextFunction, Request, Response } from 'express';
-import { ApiError } from 'utils';
+import { ApiError } from 'ApiError';
 
 export default function (
   req: Request,
